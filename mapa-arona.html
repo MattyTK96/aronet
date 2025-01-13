@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es-Es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa de Contenedores - El Fraile, Arona</title>
+  <link rel="icon" href="assets/img/arona.png" type="image/png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    #map {
+      width: 100%;
+      height: 100vh;
+    }
+
+    .info {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 280px;
+      font-size: 14px;
+    }
+
+    .zona-recogida {
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #4CAF50;
+    }
+
+    .info-text {
+      margin-bottom: 5px;
+      font-size: 13px;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .report-incident-btn {
+      display: block;
+      margin: 10px auto 0 auto;
+      padding: 8px 12px;
+      background-color: #FF5722;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .report-incident-btn:hover {
+      background-color: #e64a19;
+    }
+
+    /* Botones flotantes */
+    .floating-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      gap: 15px;
+      z-index: 1000;
+    }
+
+    .floating-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 65px;
+      height: 65px;
+      font-size: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s, background-color 0.3s;
+    }
+
+    .floating-button:hover {
+      transform: scale(1.1);
+      background-color: #45a049;
+    }
+
+    .floating-button-contact {
+      background-color: #2196F3;
+    }
+
+    .floating-button-faq {
+      background-color: #FFC200;
+    }
+
+    .floating-button-info {
+      background-color: #FF5722;
+    }
+
+/* Estilo para el botón de modo nocturno */
+.floating-button-night {
+  background-color: #333333; /* Fondo oscuro por defecto */
+  color: white; /* Texto blanco */
+  border: none;
+  border-radius: 50%; /* Hacer el botón redondo */
+  width: 65px; /* Ancho del botón */
+  height: 65px; /* Alto del botón */
+  font-size: 30px; /* Tamaño de la fuente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra del botón */
+  cursor: pointer; /* Cambiar el cursor cuando pase por encima */
+  transition: background-color 0.3s, transform 0.3s; /* Transición suave para el hover */
+}
+
+/* Efecto hover para el botón de modo nocturno */
+.floating-button-night:hover {
+  background-color: #555555; /* Fondo más claro al pasar el ratón */
+  transform: scale(1.1); /* Aumentar el tamaño ligeramente */
+}
+
+/* Estilo cuando el modo nocturno está activo (fondo amarillo y sol) */
+.floating-button-night.sun-mode {
+  background-color: #FFEB3B;  /* Fondo amarillo para el sol */
+}
+
+/* Icono del sol */
+.floating-button-night i.fa-sun {
+  color: #FFEB3B; /* Icono amarillo para el sol */
+}
+
+    /* Ventanas emergentes */
+    .tips-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      z-index: 1001;
+      display: none;
+      max-width: 400px;
+      width: 100%;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .tips-box h3 {
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .tips-box p {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .tips-box button {
+      padding: 8px 12px;
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 20px;
+    }
+
+    .tips-box button:hover {
+      background-color: #e53935;
+    }
+
+    .contact-info {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .contact-info strong {
+      font-weight: bold;
+    }
+
+    .contact-logo {
+      max-width: 150px;
+      height: auto;
+      margin-bottom: 20px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Preguntas frecuentes */
+    .faq-item {
+    font-size: 12px;
+    color: black;
+    cursor: pointer;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+
+  .faq-item:hover {
+    color: blue;
+  }
+
+  </style>
+</head>
+<body>
+
+  <div id="map"></div>
+
+  <div class="floating-buttons">
+    <button class="floating-button floating-button-night" onclick="toggleNightMode()">
+      <i class="fas fa-moon"></i>
+    </button>
+    <button class="floating-button floating-button-contact" onclick="toggleContact()">
+      <i class="fas fa-mail-bulk"></i>
+    </button>
+    <button class="floating-button floating-button-faq" onclick="toggleFAQ()">
+      <i class="fas fa-question-circle"></i>
+    </button>
+    <button class="floating-button floating-button-info" onclick="toggleInfo()">
+      <i class="fas fa-info-circle"></i>
+    </button>
+  </div>
+
+  <!-- Ventanas emergentes -->
+  <div class="tips-box" id="contact-tips">
+    <img src="assets/img/logo_ayuntamiento_arona.png" alt="Logo Ayuntamiento" class="contact-logo">
+    <p class="contact-info"><strong>Entidad Responsable:</strong> Ayuntamiento de Arona</p>
+    <p class="contact-info"><strong>Concejala del Área de Medio Ambiente:</strong> Dña.María Clara Pérez Pérez</p>
+    <p class="contact-info"><strong>Teléfono:</strong> 922 123 456</p>
+    <p class="contact-info"><strong>Correo Electrónico:</strong> medioambiente@aytoarona.org</p>
+    <p class="contact-info"><strong>Dirección:</strong> Avda. El Tanque, 10, 38640 El Fraile, Arona</p>
+    <button onclick="closeContactTips()">Cerrar</button>
+  </div>
+
+  <div class="tips-box" id="faq-tips">
+    <h3>PREGUNTAS FRECUENTES</h3>
+    <div class="faq-item">¿Cómo se recogen los residuos orgánicos?</div>
+    <div class="faq-item">¿Qué tipo de plásticos se pueden reciclar?</div>
+    <div class="faq-item">¿Dónde puedo reportar un problema?</div>
+    <div class="faq-item">¿Cómo saber el horario de los contenedores?</div>
+    <div class="faq-item">¿Qué hago si un contenedor está lleno?</div>
+    <button onclick="closeFAQ()">Cerrar</button>
+  </div>
+
+  <div class="tips-box" id="info-tips">
+    <h3>Información Adicional</h3>
+    <p><strong>Recuerda:</strong> juntos podemos mantener nuestro municipio limpio y agradable. Cada pequeña acción cuenta para cuidar nuestro entorno.</p>
+    <button onclick="closeInfoTips()">Cerrar</button>
+  </div>
+
+  <script>
+    const map = L.map('map').setView([28.011325, -16.669338], 16);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    }).addTo(map);
+
+    const containers = [
+      { lat: 28.014264, lng: -16.669860, name: 'PUNTO DE RECOGIDA DE RESIDUOS', description: 'Vidrio, Plástico, Orgánico', street: 'C/Miguel Calcerrada, S/N', hours: 'De 19:00 a 21:00', image: './assets/img/ana.jpg' },
+      { lat: 28.011224, lng: -16.669606, name: 'PUNTO DE RECOGIDA DE RESIDUOS', description: 'Vidrio, Plástico, Orgánico, Ropa, Papel y Cartón', street: 'C/Fuerteventura, 49', hours: 'De 20:00 a 22:00', image: './assets/img/ana2.jpg' },
+      { lat: 28.012787, lng: -16.668803, name: 'PUNTO DE RECOGIDA DE RESIDUOS', description: 'Vidrio, Plástico, Orgánico', street: 'C/San Sebastián de La Gomera, 55', hours: 'De 20:00 a 22:00', image: './assets/img/ana3.jpg' },
+      { lat: 28.012093, lng: -16.663944, name: 'PUNTO DE RECOGIDA DE RESIDUOS', description: 'Vidrio, Plástico, Orgánico', street: 'C/Hoya del Horno, 3', hours: 'De 20:00 a 22:00', image: './assets/img/ana4.jpg' },
+      { lat: 28.010802, lng: -16.672243, name: 'PUNTO DE RECOGIDA DE RESIDUOS', description: 'Vidrio, Plástico, Orgánico', street: 'C/Fuerteventura, ', hours: 'De 20:00 a 22:00', image: './assets/img/ana5.jpg' }
+
+    ];
+
+    containers.forEach((container, index) => {
+      const marker = L.marker([container.lat, container.lng]).addTo(map);
+
+      let nearestContainer = null;
+      let minDistance = Infinity;
+
+      containers.forEach((other, otherIndex) => {
+        if (index !== otherIndex) {
+          const distance = map.distance([container.lat, container.lng], [other.lat, other.lng]);
+          if (distance < minDistance) {
+            minDistance = distance;
+            nearestContainer = other;
+          }
+        }
+      });
+
+      const nearestInfo = nearestContainer
+        ? `<div class="info-text"><strong>Depósito Cercano:</strong> ${nearestContainer.street} (${minDistance.toFixed(2)}m)</div>`
+        : '';
+
+      marker.bindPopup(`
+        <div class="zona-recogida">${container.name}</div>
+        <div class="info-text"><strong>Descripción:</strong> ${container.description}</div>
+        <div class="info-text"><strong>Ubicación:</strong> ${container.street}</div>
+        <div class="info-text"><strong>Horario:de Recogida:</strong> ${container.hours}</div>
+        ${nearestInfo}
+        <img src="${container.image}" alt="Contenedor">
+        <button class="report-incident-btn" onclick="reportIncident()">REPORTAR INCIDENCIA</button>
+      `);
+    });
+
+    function toggleContact() {
+      const contactTips = document.getElementById("contact-tips");
+      contactTips.style.display = (contactTips.style.display === "block") ? "none" : "block";
+    }
+
+    function closeContactTips() {
+      document.getElementById("contact-tips").style.display = "none";
+    }
+
+    function toggleFAQ() {
+      const faqTips = document.getElementById("faq-tips");
+      faqTips.style.display = (faqTips.style.display === "block") ? "none" : "block";
+    }
+
+    function closeFAQ() {
+      document.getElementById("faq-tips").style.display = "none";
+    }
+
+    function toggleInfo() {
+      const infoTips = document.getElementById("info-tips");
+      infoTips.style.display = (infoTips.style.display === "block") ? "none" : "block";
+    }
+
+    function closeInfoTips() {
+      document.getElementById("info-tips").style.display = "none";
+    }
+
+    function reportIncident() {
+      window.open("https://forms.gle/xHA1kTnEdZ4c57xw8", "_blank");
+    }
+
+// Capa de mapa de día y noche
+let dayLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+  maxZoom: 19
+}).addTo(map);
+
+let nightLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.cartodb.com/attributions">CartoDB</a>',
+  maxZoom: 19
+});
+
+// Variable para controlar el modo
+let isNightMode = false;
+
+function toggleNightMode() {
+  if (isNightMode) {
+    map.removeLayer(nightLayer);  // Elimina la capa nocturna
+    map.addLayer(dayLayer);  // Vuelve al mapa diurno
+    document.body.classList.remove('night-mode');  // Elimina la clase de modo nocturno
+
+    // Cambia el icono del botón a luna y el color de fondo
+    document.querySelector('.floating-button-night i').classList.remove('fa-sun');
+    document.querySelector('.floating-button-night i').classList.add('fa-moon');
+    document.querySelector('.floating-button-night').style.backgroundColor = '#333333';  // Vuelve al color oscuro
+  } else {
+    map.removeLayer(dayLayer);  // Elimina la capa diurna
+    map.addLayer(nightLayer);  // Cambia a la capa nocturna
+    document.body.classList.add('night-mode');  // Añade la clase de modo nocturno
+
+    // Cambia el icono del botón a sol y el color de fondo
+    document.querySelector('.floating-button-night i').classList.remove('fa-moon');
+    document.querySelector('.floating-button-night i').classList.add('fa-sun');
+    document.querySelector('.floating-button-night').style.backgroundColor = 'white';  // Color amarillo para el sol
+  }
+  isNightMode = !isNightMode;  // Alterna el estado del modo
+}
+  </script>
+</body>
+</html>
