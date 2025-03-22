@@ -1,0 +1,443 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* MODO NOCTURNO */
+/* Modo nocturno general */
+body.night-mode {
+  background-color: #121212; /* Fondo oscuro */
+  color: #e0e0e0; /* Texto claro */
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Mejora en los botones del modo nocturno */
+body.night-mode button {
+  background-color: #333333;
+  color: #e0e0e0;
+  border: 1px solid #BB86FC;
+  border-radius: 8px; /* Bordes más redondeados */
+  padding: 12px 24px; /* Más espacio interno */
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+body.night-mode button:hover {
+  background-color: #BB86FC;
+  color: #121212;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+body.night-mode button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+#map {
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+}
+
+.info {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  max-width: 280px;
+  font-size: 14px;
+}
+
+.zona-recogida {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #4CAF50;
+}
+
+.info-text {
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.report-incident-btn {
+  display: block;
+  margin: 10px auto 0 auto;
+  padding: 8px 12px;
+  background-color:  #0056b3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.report-incident-btn:hover {
+  background-color: #003d82;
+  color: white;
+  transition: 0.5s ease;
+}
+
+.fill-bar-button {
+  display: block;
+  margin: 10px auto 0 auto;
+  padding: 8px 12px;
+  background-color:  red;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.fill-bar-button:hover {
+  background-color: green;
+  color: white;
+  transition: 0.5s ease;
+}
+
+    /* Estilos de Botones Flotantes */
+.floating-buttons {
+  position: fixed;
+  bottom: 30px; /* Posiciona los botones a 30px del fondo de la pantalla */
+  left: 50%; /* Centra los botones horizontalmente */
+  transform: translateX(-50%); /* Ajusta para que el centro del contenedor esté en el centro de la pantalla */
+  display: flex;
+  gap: 15px; /* Espacio entre los botones */
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+  border-radius: 30px; /* Bordes redondeados para el fondo */
+  padding: 10px 20px; /* Espaciado interno para los botones */
+  backdrop-filter: blur(10px); /* Desenfoque en el fondo detrás de los botones */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombras sutiles para profundidad */
+}
+
+.floating-button {
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.floating-button:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  transform: translateY(-5px);
+}
+
+.floating-button-filter {
+  background-color: #ffbb00;
+}
+
+.floating-button-pollution {
+  background-color: #556B2F;
+}
+
+.floating-button-stats{
+  background-color: #00A1F1;
+}
+
+.floating-button-location{
+  background-color: #00A1F1;
+}
+
+
+/* Estilo para el botón de modo nocturno */
+.floating-button-night {
+  background-color: #333333; /* Fondo oscuro por defecto */
+  color: yellow; /* Texto blanco */
+  border: none;
+  border-radius: 50%; /* Hacer el botón redondo */
+  width: 65px; /* Ancho del botón */
+  height: 65px; /* Alto del botón */
+  font-size: 30px; /* Tamaño de la fuente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra del botón */
+  cursor: pointer; /* Cambiar el cursor cuando pase por encima */
+  transition: background-color 0.3s, transform 0.3s; /* Transición suave para el hover */
+}
+
+/* Efecto hover para el botón de modo nocturno */
+.floating-button-night:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  transform: translateY(-5px);
+}
+
+/* Estilo cuando el modo nocturno está activo (fondo amarillo y sol) */
+.floating-button-night.sun-mode {
+  background-color: #FFEB3B;  /* Fondo amarillo para el sol */
+}
+
+/* Icono del sol */
+.floating-button-night i.fa-sun {
+  color: #FFEB3B; /* Icono amarillo para el sol */
+}
+
+.floating-button-back {
+  background-color: #FF5757; /* Azul */
+  color: white; /* Color del ícono */
+}
+
+/* Estilos generales para la caja de filtros */
+#filter-box {
+  width: 300px; /* Ancho de la caja */
+  padding: 15px; /* Espaciado interno */
+  background-color: white;
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  position: fixed; /* Posicionada en la pantalla */
+  top: 50%; /* Centrado verticalmente */
+  left: 50%; /* Centrado horizontalmente */
+  transform: translate(-50%, -50%); /* Ajusta el elemento para que quede completamente centrado */
+  display: none; /* Inicialmente oculta */
+  z-index: 1000; /* Asegura que esté sobre otros elementos */
+}
+
+/* Estilo del texto "Filtros" */
+.filter-header {
+  display: flex;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  height: 100%; /* Asegura que el contenedor tenga altura suficiente */
+}
+
+.filter-header span {
+  color: #333;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold; /* Asegura que el texto esté centrado en su propia línea */
+}
+
+/* Estilo de las opciones de filtros */
+.filter-options {
+  margin-top: 10px;
+}
+
+/* Estilo de las etiquetas de las opciones */
+.filter-options label {
+  display: block; /* Hace que las opciones estén en líneas separadas */
+  margin-bottom: 8px; /* Espaciado entre las opciones */
+  font-size: 14px;
+  color: #333;
+}
+
+/* Estilo de las casillas de verificación */
+.filter-options input[type="checkbox"] {
+  margin-right: 8px; /* Espaciado a la derecha de la casilla */
+}
+
+/* Estilo cuando el filtro está activo (visible) */
+.filter-box.show {
+  display: block;
+}
+
+.stats-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  display: none;
+  max-width: 400px;
+  width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+  font-family: Arial, sans-serif;
+}
+
+.stats-box h3 {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.stats-box p {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.pollution-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  display: none;
+  max-width: 400px;
+  width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+  font-family: Arial, sans-serif;
+}
+
+.pollution-box h3 {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.pollution-box p {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.legend {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  font-size: 12px;
+  z-index: 1000;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
+.legend-text {
+  flex-grow: 1;
+}
+
+.close-btn {
+  display: flex;
+  margin: 20px auto 0 auto;  /* Centra el botón en el contenedor */
+  padding: 8px 12px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.location-info {
+  position: absolute;
+  top: 20px; /* Justo en la parte superior */
+  right: 20px; /* Justo en la parte derecha */
+  width: 200px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 15px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.location-info h1 {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.location-info p {
+  font-size: 18px;
+  color: #34495e;
+  margin: 5px 0;
+}
+
+.flags {
+  display: flex;
+  justify-content: center; /* Centra las banderas horizontalmente */
+  gap: 10px; /* Espacio entre las banderas */
+  margin-top: 10px; /* Separación desde el texto */
+}
+
+.flag {
+  width: 40px; /* Tamaño de cada bandera */
+  height: auto; /* Mantiene la proporción de la imagen */
+  border-radius: 0 ;
+}
+
+.hologram-container .hologram {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wave {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--wave-color, #00ffff);
+  border-radius: 50%;
+  animation: ripple 1.2s infinite cubic-bezier(0.65, 0, 0.34, 1);
+  opacity: 0;
+}
+
+.wave:nth-child(1) { animation-delay: 0s; }
+.wave:nth-child(2) { animation-delay: 0.4s; }
+.wave:nth-child(3) { animation-delay: 0.8s; }
+
+.pulse-center {
+  width: 12px;
+  height: 12px;
+  background: var(--pulse-color, rgba(0, 255, 255, 0.8));
+  border-radius: 50%;
+  box-shadow: 0 0 20px var(--pulse-color, rgba(0, 255, 255, 0.6));
+  z-index: 2;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+

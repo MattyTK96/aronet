@@ -1,0 +1,73 @@
+/* Estilo para los popups del marcador */
+.leaflet-popup-content {
+  font-family: 'Inter', sans-serif; /* Fuente limpia y moderna */
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333; /* Color ligeramente más oscuro para mejorar la legibilidad */
+  background: rgba(255, 255, 255, 0.9); /* Fondo ligeramente menos transparente */
+  backdrop-filter: blur(8px); /* Efecto de Glassmorphism más sutil */
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1); /* Sombra ligera para un efecto de profundidad */
+  border-radius: 14px;
+  padding: 16px; /* Espaciado un poco más generoso para mejorar la legibilidad */
+  max-width: 300px; /* Limitar el ancho máximo para una presentación más ordenada */
+}
+
+/* Zona destacada del popup */
+.zona-recogida {
+  font-size: 15px; /* Aumento sutil del tamaño para destacarlo más */
+  font-weight: 600;
+  color: #007aff; /* Azul más claro y moderno (equivalente al estilo de Apple) */
+  margin-bottom: 12px; /* Aumento del margen para mayor separación */
+  text-transform: uppercase;
+  letter-spacing: 1px; /* Espaciado de letras más amplio para una apariencia más refinada */
+}
+
+/* Texto informativo */
+.info-text {
+  margin: 8px 0; /* Espaciado vertical ligeramente mayor */
+  font-size: 13px; /* Font size ajustado para mejor jerarquía */
+  color: #666; /* Color gris para un texto menos pesado */
+  line-height: 1.5;
+}
+
+/* Efecto de hover en imágenes dentro del popup */
+.leaflet-popup-content img:hover {
+  cursor: zoom-in;
+  filter: brightness(1.1); /* Ligero ajuste de brillo para un efecto suave */
+  transform: scale(1.05); /* Efecto de zoom sutil */
+  transition: transform 0.3s ease-in-out, filter 0.2s ease-in-out;
+}
+
+/* Botón del popup */
+.leaflet-popup-content button {
+  display: inline-block;
+  padding: 10px 20px; /* Tamaño más cómodo para un clic fácil */
+  background: linear-gradient(135deg, #007aff, #0051a1); /* Degradado con tonos azules más refinados */
+  color: white;
+  border: none;
+  border-radius: 8px; /* Bordes más suaves y elegantes */
+  font-size: 13px; /* Tamaño de fuente más cómodo para legibilidad */
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra sutil para dar profundidad */
+  transition: all 0.3s ease;
+}
+
+.leaflet-popup-content button:hover {
+  background: linear-gradient(135deg, #0051a1, #003f85); /* Degradado invertido para mayor énfasis */
+  transform: translateY(-2px); /* Efecto de elevación más pronunciado */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Sombra con mayor intensidad */
+}
+
+/* Transiciones suaves para todos los elementos dentro del popup */
+.leaflet-popup-content * {
+  transition: all 0.3s ease;
+}
+
+/* Efectos de enfoque y accesibilidad */
+.leaflet-popup-content button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.3); /* Efecto de enfoque accesible */
+}
+

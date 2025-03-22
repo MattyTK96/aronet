@@ -1,0 +1,608 @@
+
+ body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+.weather-widget-container {
+  width: 100%;           /* El contenedor ocupa todo el ancho de la pantalla */
+  position: fixed;            /* Fija el widget en la pantalla */
+  top: 50px;                     /* Coloca el widget en la parte superior */
+  left: 0;                    /* Alinea el widget al borde izquierdo */
+  z-index: 100;               /* Asegura que esté encima de otros elementos */
+}
+
+.weatherwidget-io {
+  display: block;             /* Hace que el widget ocupe todo el ancho */
+  width: 100%;                /* Ajusta el ancho al 100% de su contenedor */
+  height: 50px;               /* Establece una altura adecuada */
+  text-align: center;         /* Centra el texto del widget */
+  line-height: 50px;          /* Alinea el texto verticalmente */
+  font-size: 10px;            /* Ajusta el tamaño de la fuente */
+}
+
+    /* Estilos de Botones Flotantes */
+.floating-buttons {
+  position: fixed;
+  bottom: 30px; /* Posiciona los botones a 30px del fondo de la pantalla */
+  left: 50%; /* Centra los botones horizontalmente */
+  transform: translateX(-50%);/* Ajusta para que el centro del contenedor esté en el centro de la pantalla */
+  display: flex;
+  gap: 15px; /* Espacio entre los botones */
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+  border-radius: 30px; /* Bordes redondeados para el fondo */
+  padding: 10px 20px; /* Espaciado interno para los botones */
+  backdrop-filter: blur(10px); /* Desenfoque en el fondo detrás de los botones */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombras sutiles para profundidad */
+}
+
+.floating-button {
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.floating-button:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  transform: translateY(-5px);
+}
+
+.floating-button-contact {
+  background-color: #1E88E5;
+}
+
+.floating-button-contact:hover {
+  background-color: black;
+}
+
+.floating-button-info {
+  background-color: red;
+}
+
+.floating-button-info:hover {
+  background-color: black;
+}
+
+
+.floating-button-lang{
+  background-color:  white;
+  color: black;
+}
+
+.floating-button-lang:hover{
+  color: white;
+  background-color: black;
+}
+
+.floating-button-faq {
+  background-color: #FBC02D;
+}
+
+.floating-button-faq:hover {
+  background-color: black;
+}
+
+.floating-button-resources {
+  background-color: violet;
+}
+
+.floating-button-resources:hover {
+  background-color: black;
+}
+
+.resources-container {
+  display: none; /* Está oculto inicialmente */
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 40px; /* Aumentar padding para darle más espacio interno */
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%; /* Centrado vertical */
+  left: 50%; /* Centrado horizontal */
+  transform: translate(-50%, -50%); /* Para centrar exactamente */
+  z-index: 9999; /* Asegura que esté sobre otros elementos */
+  background-color: white; /* Fondo difuso detrás de los recursos */
+  border-radius: 10px; /* Bordes redondeados para el contenedor */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra sutil para dar profundidad */
+  animation: fadeIn 0.5s ease-in-out; /* Efecto de aparición */
+  width: 80%; /* Aumentar el ancho del contenedor (anteriormente 60%) */
+  height: 50%; /* Aumentar la altura del contenedor */
+  overflow-y: auto; /* Añadir desplazamiento vertical si es necesario */
+}
+
+/* Animación de entrada suave */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+/* Estilo para cada botón */
+.resource-button {
+  background-color: #4CAF50; /* Color de fondo verde */
+  color: white; /* Texto blanco */
+  border: none;
+  padding: 20px 30px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 150px; /* Forma de burbuja */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  transition: all 0.3s ease-in-out; /* Transición suave */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  width: auto;
+  min-width: 150px; /* Tamaño mínimo de los botones */
+}
+
+/* Cambios en el hover para dar efecto visual */
+.resource-button:hover {
+  transform: scale(1.1); /* Efecto de ampliación */
+  background-color: #388E3C; /* Color más oscuro al hacer hover */
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+/* Efecto de transición suave para los iconos */
+.resource-button i {
+  font-size: 2em; /* Iconos más grandes */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Al hacer hover en el botón, los iconos se agrandan un poco */
+.resource-button:hover i {
+  transform: scale(1.2);
+}
+
+/* Colores personalizados para cada tipo de recurso */
+.resource-button:nth-child(1) {
+  background-color: #4CAF50; /* Verde - Reciclaje */
+}
+
+.resource-button:nth-child(2) {
+  background-color: #FF9800; /* Naranja - Limpieza Ecológica */
+}
+
+.resource-button:nth-child(3) {
+  background-color: #2196F3; /* Azul - Educación Ambiental */
+}
+
+.resource-button:nth-child(4) {
+  background-color: #9C27B0; /* Morado - Puntos de Reciclaje */
+}
+
+.resource-button:nth-child(5) {
+  background-color: #FF5722; /* Rojo - Eventos de Limpieza */
+}
+
+.resource-button:nth-child(6) {
+  background-color: #8BC34A; /* Verde claro - Reducción de Desperdicio */
+}
+
+/* Añadir efecto de burbuja flotante para los botones */
+.resource-button {
+  animation: bounceIn 0.5s ease-in-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.faq-item {
+  font-size: 12px;
+  color: black;
+  cursor: pointer;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.faq-item:hover {
+  color: blue;
+}
+
+.tips-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  display: none;
+  max-width: 400px;
+  width: 100%;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.tips-box h3 {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.tips-box p {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.tips-box button {
+  display: block;
+  margin: 20px auto 0 auto;  /* Centra el botón en el contenedor */
+  padding: 8px 12px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.contact-info {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.contact-info strong {
+  font-weight: bold;
+}
+
+.contact-logo {
+  max-width: 150px;
+  height: auto;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.close-btn {
+  display: block;
+  margin: 20px auto 0 auto;  /* Centra el botón en el contenedor */
+  padding: 8px 12px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Estilo para el cuadro de información */
+.info-box {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  max-width: 400px;
+  width: 100%;
+  text-align: left;
+}
+
+.info-box h2 {
+  text-align: center;
+  font-size: 22px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.info-box p {
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #333;
+}
+
+.info-box li {
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #333;
+}
+
+.close-info-btn {
+  display: block;
+  margin: 20px auto 0 auto;
+  padding: 8px 12px;
+  background-color: red;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Estilo para el contenedor principal */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to right, #1e88e5, #0d47a1);
+  color: white;
+  text-align: center;
+}
+
+/* Título principal */
+.main-container h1 {
+  font-size: 100px;
+  margin-bottom: 20px;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+/* Subtítulo */
+.main-container p {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* Botón de carga */
+.loading-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.loading-button:hover {
+  background-color: #45a049;
+}
+
+/* Modal general */
+.localities-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+  z-index: 1000;
+}
+
+.localities-modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  width: 60%; /* Más pequeño */
+  max-height: 60%;
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.localities-modal-content h2 {
+  font-size: 18px; /* Más pequeño */
+  margin-bottom: 15px; /* Menor espacio */
+  text-align: center;
+}
+
+/* Contenedor de la lista de localidades */
+.localities-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 70vh; /* Limita la altura del contenedor al 70% de la altura de la pantalla */
+  overflow-y: auto; /* Habilita el desplazamiento vertical */
+  -webkit-overflow-scrolling: touch; /* Mejora la experiencia en dispositivos iOS */
+}
+
+/* Estilo para los elementos de la lista */
+.locality-item {
+  background-color: #f0f0f0;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: transform 0.2s ease-in-out;
+  margin: 5px 0;
+}
+
+.locality-item:hover {
+  background-color: #e0e0e0;
+}
+
+/* Clases para disponibilidad */
+.available {
+  color: green;
+}
+
+.unavailable {
+  color: red;
+}
+
+/* Botón de cerrar */
+.close-modal-btn {
+  display: block;
+  margin: 10px auto 0;
+  padding: 10px 20px; /* Más pequeño */
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px; /* Más pequeño */
+  text-align: center;
+}
+/* CHATBOX */
+#chatbot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+#chatbot-button {
+  background: linear-gradient(135deg, #007bff, #00d4ff);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  font-size: 28px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#chatbot-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#chatbox {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 350px;
+  height: 500px;
+  background: linear-gradient(135deg, #ffffff, #f3f3f3);
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+}
+
+#chatbox.hidden {
+  display: none;
+}
+
+#chat-header {
+  background: linear-gradient(135deg, #007bff, #0056d8);
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#chat-header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+#chat-content {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #f9f9f9;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#chat-content .message {
+  margin-bottom: 10px;
+}
+
+#chat-content .user-message {
+  background: #007bff;
+  color: white;
+  padding: 10px;
+  border-radius: 15px;
+  margin-left: auto;
+  max-width: 70%;
+}
+
+#chat-content .bot-message {
+  background: #f1f1f1;
+  color: #333;
+  padding: 10px;
+  border-radius: 15px;
+  margin-right: auto;
+  max-width: 70%;
+}
+
+#chat-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background: #ffffff;
+}
+
+#chat-input input {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+#chat-input input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+#chat-input button {
+  background: linear-gradient(135deg, #007bff, #00d4ff);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+#chat-input button:hover {
+  background: linear-gradient(135deg, #0056d8, #007bff);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
