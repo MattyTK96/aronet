@@ -1,0 +1,110 @@
+{
+    "intents": {
+        "saludos": {
+            "triggers": {
+                "patterns": [
+                    "hola", "hola.", "Hola", "Hola.", 
+                    "buenos días", "Buenos días", "buenos días.", "Buenos días.",
+                    "buenos dias", "Buenos dias", "buenos dias.", "Buenos dias.",
+                    "buenas tardes", "Buenas tardes", "buenas tardes.", "Buenas tardes.",
+                    "buenas noches"
+                ],
+                "settings": {
+                    "ignore_case": true,
+                    "strip_punctuation": true,
+                    "partial_match": false
+                }
+            },
+            "responses": {
+                "es": [
+                    "¡Hola! ¿En qué puedo ayudarte?"
+                ],
+                "fallback": "saludos"
+            }
+        },
+        
+        "ubicacion_residuos": {
+            "triggers": {
+                "patterns": [
+                    "dónde están los puntos de recogida de residuos",
+                    "donde están los puntos de recogida de basura",
+                    "ubicación puntos de recogida",
+                    "mapa de recogida de basura",
+                    "puntos limpios en Arona",
+                    "dónde tiro los residuos electrónicos",
+                    "quiero reportar un contenedor roto"
+                ],
+                "settings": {
+                    "ignore_case": true,
+                    "strip_punctuation": true,
+                    "partial_match": true
+                }
+            },
+            "responses": {
+                "es": [
+                    "Puedes ponerte en contacto con nosotros a través del siguiente número: +34 000 00 00 00"
+                ]
+            }
+        },
+        
+        "reportes": {
+            "triggers": {
+                "patterns": [
+                    "quiero denunciar un contenedor lleno",
+                    "cómo reportar un problema con la basura",
+                    "contacto para incidencias de residuos",
+                    "como puedo reportar una incidencia?",
+                    "reportar basura"
+                ],
+                "settings": {
+                    "ignore_case": true,
+                    "strip_punctuation": true,
+                    "partial_match": true
+                }
+            },
+            "responses": {
+                "es": [
+                    "Puedes reportar incidencias mediante:\n1. Formulario web: [Enlace]\n2. Código QR en contenedores\n3. Teléfono: 922 761 600",
+                    "Para reportar problemas por favor llámenos al siguiente número 922 85 01"
+                ],
+                "quick_actions": [
+                    {"type": "qr", "data": "incidencia-123"},
+                    {"type": "phone", "number": "922761600"},
+                    {"type": "web", "url": "https://reportes.arona.org"}
+                ]
+            }
+        },
+        
+        "idiomas": {
+            "triggers": {
+                "patterns": [
+                    "hablas polaco?"
+                ],
+                "settings": {
+                    "ignore_case": true,
+                    "strip_punctuation": false,
+                    "partial_match": false
+                }
+            },
+            "responses": {
+                "es": ["Tak, mówię po polsku. W czym mogę pomóc?"],
+                "fallback": "saludos"
+            }
+        }
+    },
+    
+    "config": {
+        "defaults": {
+            "language": "es",
+            "unknown_response": "Disculpe, no entendí. ¿Puede reformularlo?",
+            "similarity_threshold": 0.7,
+            "max_attempts": 3,
+            "auto_suggest": true
+        },
+        "metadata": {
+            "version": "2.1",
+            "last_trained": "2023-11-15",
+            "supported_features": ["normalization", "multi-language", "quick_actions"]
+        }
+    }
+}
