@@ -317,12 +317,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// Función para mostrar/ocultar el cuadro de incidencias
+function toggleIncidents() {
+  const incidentsBox = document.getElementById("incidents-box");
+  incidentsBox.style.display = (incidentsBox.style.display === "block") ? "none" : "block";
+}
 
-
-
-
-
-
-
-
-
+// Función para cerrar el cuadro de incidencias
+function closeIncidents() {
+  document.getElementById("incidents-box").style.display = "none";
+}
