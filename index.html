@@ -36,6 +36,9 @@
     <button class="floating-button floating-button-night" onclick="toggleNightMode()">
       <i class="fas fa-moon"></i>
     </button>
+    <button class="floating-button floating-button-incidents" onclick="toggleIncidents()">
+    <i class="fas fa-images"></i>
+  </button>
   </div>
 
   <!-- RECUADRO ESTADÍSTICAS -->
@@ -45,7 +48,7 @@
   <p><strong>Población Total:</strong> 13.413 habitantes.</p>
   <p><strong>Área Total:</strong> 2.06km²</p>
   <p><strong>Densidad Poblacional:</strong> 6.511 habitantes por km².</p>
-  <p><strong>Puntos de Recogida:</strong> 12.</p>
+  <p><strong>Puntos de Recogida:</strong> 15.</p>
   <p><strong>Nº. Habitantes por Punto de Recogida:</strong> 894 habitantes.</p>
   <button class="close-btn" onclick="closeStats()">Cerrar</button>
 </div>
@@ -61,44 +64,40 @@
   </div>
 </div>
 
-<!-- OPCIONES DE FILTRO -->
-<div id="filter-box" class="filter-box">
-  <div class="filter-header">
-      <span>FILTROS</span>
-  </div>
-  <div class="filter-options">
-      <label>
-          <input type="checkbox" id="residuos-filter"> Puntos de Recogida de Residuos
-      </label>
-      <label>
-          <input type="checkbox" id="alumbrado-filter"> Alumbrado Público
-      </label>
-      <label>
-          <input type="checkbox" id="carretera-filter"> Carretera en Obras
-      </label>
-      <label>
-          <input type="checkbox" id="zonasverdes-filter"> Zonas Verdes
-      </label>
-      <label>
-          <input type="checkbox" id="biodiversidad-filter"> Control de Plagas y Especies
-      </label>
-  </div>
-  <button class="close-btn" onclick="closeFilter()">Cerrar</button>
-</div>
 
 
-  <!-- DATOS AMBIENTALES -->
-  <canvas id="pollutionChart" width="400" height="200"></canvas>
- <div class="pollution-box" id="pollution-box">
-  <h3>DATOS AMBIENTALES</h3>
-  <p><strong>Cantidad de Residuos Generados Anualmente:</strong> No Disponible.</p>
-  <p><strong>Tasa de Reciclaje:</strong> No Disponible.</p>
-  <p><strong>Generación de Resiudos por Habitante:</strong> No Disponible.</p>
-  <p><strong>Índice de Calidad de Aire:</strong> No Disponible.
-  <p><strong>Contaminación Acústica:</strong> No Disponible.</p>
-  <p><strong>Calidad del Agua:</strong> No Disponible.</p>
-  <p><strong>Índice Sostenibilidad: </strong> No Disponible.</p>
-  <button class="close-btn" onclick="closePollution()">Cerrar</button>
+<!-- CUADRO DE INCIDENCIAS -->
+<div class="incidents-box" id="incidents-box">
+  <h3>INCIDENCIAS REPORTADAS</h3>
+  <div class="incidents-grid">
+    <!-- Ejemplo de item de incidencia -->
+    <div class="incident-item">
+      <img src="./assets/img/Fraile/fuerteventura_sn.jpg" alt="Incidencia">
+      <div class="incident-info">
+        <div class="incident-date">25/05/2025 10:30</div>
+        <div class="incident-street">C/Fuerteventura, S/N.</div>
+        <div class="incident-description">Contenedor de vidrio bloqueado y con cristales rotos.</div>
+      </div>
+    </div>
+    <div class="incident-item">
+      <img src="./assets/img/Fraile/fuerteventura_sn.jpg" alt="Incidencia">
+      <div class="incident-info">
+        <div class="incident-date">25/05/2025 10:30</div>
+        <div class="incident-street">C/Fuerteventura, S/N.</div>
+        <div class="incident-description">Contenedor de vidrio bloqueado y con cristales rotos.</div>
+      </div>
+    </div>
+    <div class="incident-item">
+      <img src="./assets/img/Fraile/fuerteventura_sn.jpg" alt="Incidencia">
+      <div class="incident-info">
+        <div class="incident-date">25/05/2025 10:30</div>
+        <div class="incident-street">C/Fuerteventura, S/N.</div>
+        <div class="incident-description">Contenedor de vidrio bloqueado y con cristales rotos.</div>
+      </div>
+    </div>
+    <!-- Más items se añadirían dinámicamente -->
+  </div>
+  <button class="close-btn" onclick="closeIncidents()">Cerrar</button>
 </div>
 
 </body>
